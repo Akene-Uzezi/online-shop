@@ -1,4 +1,6 @@
 <%- include('../includes/head', {title: 'Sign up' }) %>
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/auth.css">
     </head>
 
     <body>
@@ -6,35 +8,35 @@
             <main>
                 <h1>Create new account</h1>
                 <form action="" method>
-                    <div class="form-control">
+                    <p>
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username" required>
-                    </div>
-                    <div class="form-control">
+                    </p>
+                    <p>
                         <label for="password">Password</label>
                         <input type="password" name="password" id="password">
-                    </div>
-                    <div class="form-control">
+                    </p>
+                    <p>
                         <label for="confirmPassword">Confirm Password</label>
                         <input type="password" name="confirmPassword" id="confirmPassword">
-                    </div>
+                    </p>
                     <hr>
-                    <div class="form-control">
+                    <p>
                         <label for="fullname">Full Name</label>
                         <input type="text" name="fullname" id="fullname" required>
-                    </div>
-                    <div class="form-control">
+                    </p>
+                    <p>
                         <label for="street">Street</label>
                         <input type="text" name="street" id="street" required>
-                    </div>
-                    <div class="form-control">
+                    </p>
+                    <p>
                         <label for="postal">Postal Code</label>
                         <input type="text" name="postal" id="postal" minlength="5" maxlength="5" required>
-                    </div>
-                    <div class="form-control">
+                    </p>
+                    <p>
                         <label for="city">City</label>
                         <input type="text" name="city" id="city" required>
-                    </div>
+                    </p>
                     <button class="btn">Create Account</button>
                     <p id="switch-form">Already have an account?<a href="/login">Login</a></p>
                 </form>
