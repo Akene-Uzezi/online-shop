@@ -1,10 +1,29 @@
+const User = require("../models/user.models");
 const getSignup = async (req, res) => {
   res.render("customer/auth/signup");
 };
 
-const getLogin = async (req, res) => {};
+const signup = async (req, res) => {
+  const user = new User(
+    req.body.username,
+    req.body.password,
+    req.body.confirmPassword,
+    req.body.fullname,
+    req.body.street,
+    req.body.postal,
+    req.body.city
+  );
+
+  await user.signup();
+  return res.redirect("/login");
+};
+
+const getLogin = async (req, res) => {
+  res.render("customer/auth/login");
+};
 
 module.exports = {
   getSignup,
   getLogin,
+  signup,
 };

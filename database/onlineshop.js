@@ -4,12 +4,12 @@ let database;
 
 const connect = async () => {
   const client = await MongoClient.connect("mongodb://localhost:27017");
-  database = client.db("databasename");
+  database = client.db("online-shop");
 };
 
 const getDb = () => {
   if (!database) {
-    throw { message: "You need to connect first" };
+    throw new Error("You need to connect first");
   }
   return database;
 };
