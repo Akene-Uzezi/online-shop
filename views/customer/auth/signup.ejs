@@ -1,0 +1,45 @@
+<%- include('../includes/head', {title: 'Sign up' }) %>
+    </head>
+
+    <body>
+        <%- include('../includes/header') %>
+            <main>
+                <h1>Create new account</h1>
+                <form action="" method>
+                    <div class="form-control">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password">
+                    </div>
+                    <div class="form-control">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword">
+                    </div>
+                    <hr>
+                    <div class="form-control">
+                        <label for="fullname">Full Name</label>
+                        <input type="text" name="fullname" id="fullname" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="street">Street</label>
+                        <input type="text" name="street" id="street" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="postal">Postal Code</label>
+                        <input type="text" name="postal" id="postal" minlength="5" maxlength="5" required>
+                    </div>
+                    <div class="form-control">
+                        <label for="city">City</label>
+                        <input type="text" name="city" id="city" required>
+                    </div>
+                    <button class="btn">Create Account</button>
+                    <p id="switch-form">Already have an account?<a href="/login">Login</a></p>
+                </form>
+            </main>
+            <%- include('../includes/footer') %>
+    </body>
+
+    </html>
