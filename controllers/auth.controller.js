@@ -15,7 +15,7 @@ const signup = async (req, res) => {
   );
 
   await user.signup();
-  return res.redirect("/login");
+  res.redirect("/login");
 };
 
 const getLogin = async (req, res) => {
