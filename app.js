@@ -3,6 +3,7 @@ const path = require("path");
 const authRoutes = require("./routes/auth.routes");
 const csrf = require("csurf");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+const errorHandlerMiddleware = require("./middlewares/error-handler");
 const db = require("./database/onlineshop");
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(addCsrfTokenMiddleware);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(authRoutes);
+
+app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
   .then(() => {
