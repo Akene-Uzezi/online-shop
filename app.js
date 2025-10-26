@@ -1,6 +1,8 @@
 const express = require("express");
 const path = require("path");
 const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/product.routes");
+const baseRoutes = require("./routes/base.routes");
 const csrf = require("csurf");
 const session = require("express-session");
 const createSessionConfig = require("./config/session.config");
@@ -17,7 +19,9 @@ app.use(csrf());
 app.use(addCsrfTokenMiddleware);
 app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(productRoutes);
 
 app.use(errorHandlerMiddleware);
 

@@ -1,4 +1,5 @@
 const User = require("../models/user.models");
+const authUtil = require("../util/authentications");
 const getSignup = async (req, res) => {
   res.render("customer/auth/signup");
 };
@@ -22,8 +23,29 @@ const getLogin = async (req, res) => {
   res.render("customer/auth/login");
 };
 
+const login = async (req, res) => {
+  const user = new User(req.body.username, req.body.password);
+  const existingUser = await user.getUserWithSameUsername();
+  if (!existingUser) {
+    res.redirect("/login");
+    return;
+  }
+  const passwordIsCorrect = await user.hasMatchingPassword(
+    existingUser.password
+  );
+  if (!passwordIsCorrect) {
+    res.redirect("/login");
+    return;
+  }
+
+  authUtil.createUserSession(req, existingUser, () => {
+    res.redirect("/");
+  });
+};
+
 module.exports = {
   getSignup,
   getLogin,
   signup,
+  login,
 };
