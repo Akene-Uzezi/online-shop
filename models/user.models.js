@@ -25,6 +25,15 @@ class User {
     return db.getDb().collection("users").findOne({ username: this.username });
   }
 
+  async existsAlready() {
+    const existingUser = await this.getUserWithSameUsername();
+    if (existingUser) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   async signup() {
     const hashedPassword = await bcrypt.hash(this.password, 12);
     await db.getDb().collection("users").insertOne({
