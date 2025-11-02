@@ -4,7 +4,7 @@ const getSignup = async (req, res) => {
   res.render("customer/auth/signup");
 };
 
-const signup = async (req, res) => {
+const signup = async (req, res, next) => {
   const user = new User(
     req.body.username,
     req.body.password,
@@ -14,8 +14,12 @@ const signup = async (req, res) => {
     req.body.postal,
     req.body.city
   );
-
-  await user.signup();
+  try {
+    await user.signup();
+  } catch (err) {
+    next(err);
+    return;
+  }
   res.redirect("/login");
 };
 
@@ -23,9 +27,15 @@ const getLogin = async (req, res) => {
   res.render("customer/auth/login");
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const user = new User(req.body.username, req.body.password);
-  const existingUser = await user.getUserWithSameUsername();
+  let existingUser;
+  try {
+    existingUser = await user.getUserWithSameUsername();
+  } catch (err) {
+    next(err);
+    return;
+  }
   if (!existingUser) {
     res.redirect("/login");
     return;
