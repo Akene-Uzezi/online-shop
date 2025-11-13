@@ -3,7 +3,21 @@ const authUtil = require("../util/authentications");
 const validation = require("../util/validation");
 const sessionFlash = require("../util/sessionflash");
 const getSignup = async (req, res) => {
-  res.render("customer/auth/signup");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      username: "",
+      password: "",
+      confirmPassword: "",
+      fullname: "",
+      street: "",
+      postal: "",
+      city: "",
+    };
+  }
+
+  res.render("customer/auth/signup", { inputData: sessionData });
 };
 
 const signup = async (req, res, next) => {
@@ -11,6 +25,7 @@ const signup = async (req, res, next) => {
     username: req.body.username,
     password: req.body.password,
     fullname: req.body.fullname,
+    confirmPassword: req.body.confirmPassword,
     street: req.body.street,
     postal: req.body.postal,
     city: req.body.city,
@@ -24,7 +39,7 @@ const signup = async (req, res, next) => {
       req.body.postal,
       req.body.city
     ) ||
-    validation.passwordIsConfirmed(req.body.password, req.body.confirmPassword)
+    !validation.passwordIsConfirmed(req.body.password, req.body.confirmPassword)
   ) {
     sessionFlash.flashDataToSession(
       req,
@@ -73,7 +88,16 @@ const signup = async (req, res, next) => {
 };
 
 const getLogin = async (req, res) => {
-  res.render("customer/auth/login");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      username: "",
+      password: "",
+    };
+  }
+
+  res.render("customer/auth/login", { inputData: sessionData });
 };
 
 const login = async (req, res, next) => {

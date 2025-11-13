@@ -7,19 +7,28 @@
         <%- include('../../shared/includes/header') %>
             <main>
                 <h1>Login</h1>
-                <form action="/login" method="POST">
-                    <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
-                    <p>
-                        <label for="username">Username</label>
-                        <input type="text" name="username" id="username" required>
-                    </p>
-                    <p>
-                        <label for="password">Password</label>
-                        <input type="password" name="password" id="password">
-                    </p>
-                    <button class="btn">Login</button>
-                    <p id="switch-form">Don't have an account? <a href="/signup">Sign up</a></p>
-                </form>
+                <% if(inputData.errorMessage) { %>
+                    <section class="alert">
+                        <h2>Invalid Credentials</h2>
+                        <p>
+                            <%= inputData.errorMessage %>
+                        </p>
+                    </section>
+                    <% } %>
+                        <form action="/login" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= locals.csrfToken %>">
+                            <p>
+                                <label for="username">Username</label>
+                                <input type="text" name="username" id="username" value="<%= inputData.username %>"
+                                    required>
+                            </p>
+                            <p>
+                                <label for="password">Password</label>
+                                <input type="password" name="password" value="<%= inputData.password %>" id="password">
+                            </p>
+                            <button class="btn">Login</button>
+                            <p id="switch-form">Don't have an account? <a href="/signup">Sign up</a></p>
+                        </form>
             </main>
             <%- include('../../shared/includes/footer') %>
     </body>
