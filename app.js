@@ -7,6 +7,7 @@ const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
+const notFound = require("./middlewares/not-found");
 const checkAuthStatus = require("./middlewares/check-auth");
 const db = require("./database/onlineshop");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
@@ -25,6 +26,7 @@ app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
 
+app.use(notFound);
 app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
