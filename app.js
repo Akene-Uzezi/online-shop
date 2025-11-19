@@ -11,6 +11,7 @@ const notFound = require("./middlewares/not-found");
 const checkAuthStatus = require("./middlewares/check-auth");
 const db = require("./database/onlineshop");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+const adminRoutes = require("./routes/admin.routes");
 const app = express();
 
 app.set("view engine", "ejs");
@@ -19,12 +20,15 @@ const sessionConfig = createSessionConfig();
 app.use(session(sessionConfig));
 app.use(checkAuthStatus);
 app.use(express.static("public"));
+app.use("/admin", express.static("public"));
+app.use("/admin/products", express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 app.use(csrf());
 app.use(addCsrfTokenMiddleware);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
+app.use("/admin", adminRoutes);
 
 app.use(notFound);
 app.use(errorHandlerMiddleware);
