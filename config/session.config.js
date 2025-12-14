@@ -1,5 +1,6 @@
 const mongoDbStore = require("connect-mongodb-session");
 const session = require("express-session");
+require("dotenv").config();
 const createSessionStore = () => {
   const MongoDbStore = mongoDbStore(session);
 
@@ -14,7 +15,7 @@ const createSessionStore = () => {
 
 const createSessionConfig = () => {
   return {
-    secret: "super-secret",
+    secret: process.env.cookieSecret,
     resave: false,
     saveUninitialized: false,
     store: createSessionStore(),
