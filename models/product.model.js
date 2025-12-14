@@ -8,7 +8,7 @@ class Product {
     this.description = productData.description;
     this.image = productData.image; // name of the image file
     this.imagePath = `product-data/images/${this.image}`;
-    this.imageUrl = `/products/assests/images/${this.image}`;
+    this.imageUrl = `/products/assets/images/${this.image}`;
     if (productData._id) {
       this.id = productData._id.toString();
     }
@@ -16,9 +16,7 @@ class Product {
 
   static async findAll() {
     const products = await db.getDb().collection("products").find().toArray();
-    return products.map((productDocument) => {
-      return new Product(productDocument);
-    });
+    return products;
   }
 
   async save() {
@@ -28,6 +26,8 @@ class Product {
       price: this.price,
       description: this.description,
       image: this.image,
+      imagePath: this.imagePath,
+      imageUrl: this.imageUrl,
     };
     await db.getDb().collection("products").insertOne(productData);
   }

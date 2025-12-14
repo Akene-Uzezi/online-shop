@@ -22,6 +22,7 @@ app.use(checkAuthStatus);
 app.use(express.static("public"));
 app.use("/admin", express.static("public"));
 app.use("/admin/products", express.static("public"));
+app.use("/products/assets", express.static("product-data"));
 app.use(express.urlencoded({ extended: false }));
 app.use(csrf());
 app.use(addCsrfTokenMiddleware);

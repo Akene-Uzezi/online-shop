@@ -11,11 +11,9 @@
                 </section>
                 <section>
                     <ul>
-                        <% for (const product in products) { %>
-                            <li>
-                                <%- include('inc/product-item', { product }) %>
-                            </li>
-                            <% } %>
+                        <% products.forEach((product)=> { %>
+                            <%- include('inc/product-item', {product}) %>
+                                <% }) %>
                     </ul>
                 </section>
             </main>
