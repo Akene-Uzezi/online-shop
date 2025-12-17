@@ -20,7 +20,7 @@ const createSessionConfig = () => {
     saveUninitialized: false,
     store: createSessionStore(),
     cookie: {
-      maxAge: 30 * 60 * 1000,
+      maxAge: 4 * 60 * 60 * 1000,
     },
   };
 };
