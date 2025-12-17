@@ -1,4 +1,5 @@
 const db = require("../database/onlineshop");
+const mongodb = require("mongodb");
 
 class Product {
   constructor(productData) {
@@ -17,6 +18,15 @@ class Product {
   static async findAll() {
     const products = await db.getDb().collection("products").find().toArray();
     return products;
+  }
+
+  static async findById(productId) {
+    const prodId = new mongodb.ObjectId(productId);
+    const product = await db
+      .getDb()
+      .collection("products")
+      .findOne({ _id: prodId });
+    return product;
   }
 
   async save() {

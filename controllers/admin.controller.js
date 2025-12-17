@@ -27,8 +27,17 @@ const createNewProduct = async (req, res) => {
   res.redirect("/admin/products");
 };
 
+const getUpdateProduct = async (req, res) => {
+  const product = await Product.findById(req.params.id);
+  res.render("admin/products/update-product", { product });
+};
+
+const updateProduct = () => {};
+
 module.exports = {
   getProducts,
   getNewProduct,
   createNewProduct,
+  getUpdateProduct,
+  updateProduct,
 };
