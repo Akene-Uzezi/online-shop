@@ -1,5 +1,5 @@
 const db = require("../database/onlineshop");
-const mongodb = require("mongodb");
+const ObjectId = require("mongodb").ObjectId;
 
 class Product {
   constructor(productData) {
@@ -21,7 +21,7 @@ class Product {
   }
 
   static async findById(productId) {
-    const prodId = new mongodb.ObjectId(productId);
+    const prodId = new ObjectId(productId);
     const product = await db
       .getDb()
       .collection("products")

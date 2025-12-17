@@ -28,7 +28,8 @@ const createNewProduct = async (req, res) => {
 };
 
 const getUpdateProduct = async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const { id } = req.params;
+  const product = await Product.findById(id);
   res.render("admin/products/update-product", { product });
 };
 

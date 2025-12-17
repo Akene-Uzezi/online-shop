@@ -13,7 +13,7 @@ router.post(
   adminController.createNewProduct
 );
 
-router.get("/product/:id", adminController.getUpdateProduct);
+router.get("/products/:id", adminController.getUpdateProduct);
 
 router.post("/products/:id", adminController.updateProduct);
 
