@@ -8,8 +8,9 @@ class Product {
     this.price = +productData.price;
     this.description = productData.description;
     this.image = productData.image; // name of the image file
-    this.imagePath = `product-data/images/${this.image}`;
-    this.imageUrl = `/products/assets/images/${this.image}`;
+    if (this.image) {
+      this.updateImage();
+    }
     if (productData._id) {
       this.id = productData._id.toString();
     }
@@ -18,6 +19,11 @@ class Product {
   static async findAll() {
     const products = await db.getDb().collection("products").find().toArray();
     return products;
+  }
+
+  updateImage() {
+    this.imagePath = `product-data/images/${this.image}`;
+    this.imageUrl = `/products/assets/images/${this.image}`;
   }
 
   static async findById(productId) {
@@ -36,10 +42,31 @@ class Product {
       price: this.price,
       description: this.description,
       image: this.image,
-      imagePath: this.imagePath,
-      imageUrl: this.imageUrl,
+      imagePath: `product-data/images/${this.image}`,
+      imageUrl: `/products/assets/images/${this.image}`,
     };
-    await db.getDb().collection("products").insertOne(productData);
+
+    if (this.id) {
+      const productId = new ObjectId(this.id);
+
+      if (!this.image) {
+        delete productData.image;
+        delete productData.imagePath;
+        delete productData.imageUrl;
+      }
+
+      await db
+        .getDb()
+        .collection("products")
+        .updateOne({ _id: productId }, { $set: productData });
+    } else {
+      await db.getDb().collection("products").insertOne(productData);
+    }
+  }
+
+  replaceImage(newImage) {
+    this.image = newImage;
+    this.updateImage();
   }
 }
 
