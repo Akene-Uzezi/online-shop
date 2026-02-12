@@ -49,6 +49,33 @@ class Product {
     return product;
   }
 
+  async updateProduct() {
+    const productData = {
+      title: this.title,
+      summary: this.summary,
+      price: this.price,
+      description: this.description,
+      image: this.image,
+      imagePath: `product-data/images/${this.image}`,
+      imageUrl: `/products/assets/images/${this.image}`,
+    };
+    let productID;
+    if (this.id) {
+      productID = new ObjectId(this.id);
+    }
+
+    if (!this.image) {
+      delete productData.image;
+      delete productData.imagePath;
+      delete productData.imageUrl;
+    }
+
+    await db
+      .getDb()
+      .collection("products")
+      .updateOne({ _id: productID }, { $set: productData });
+  }
+
   async save() {
     const productData = {
       title: this.title,
