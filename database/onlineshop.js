@@ -1,10 +1,11 @@
 const mongodb = require("mongodb");
 const MongoClient = mongodb.MongoClient;
+require("dotenv").config();
 let database;
 
 const connect = async () => {
-  const client = await MongoClient.connect("mongodb://localhost:27017");
-  database = client.db("online-shop");
+  const client = await MongoClient.connect(process.env.uri);
+  database = client.db(process.env.dbName);
 };
 
 const getDb = () => {
