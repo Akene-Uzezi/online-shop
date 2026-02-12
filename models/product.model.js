@@ -68,6 +68,11 @@ class Product {
     this.image = newImage;
     this.updateImage();
   }
+
+  remove() {
+    const productId = new ObjectId(this.id);
+    return db.getDb().collection("products").deleteOne({ _id: productId });
+  }
 }
 
 module.exports = Product;
