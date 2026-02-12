@@ -18,7 +18,7 @@ const createNewProduct = async (req, res) => {
   const product = new Product({ ...req.body, image: req.file.filename });
 
   try {
-    await product.save();
+    await product.addNewProduct();
   } catch (err) {
     next(err);
     return;
@@ -51,13 +51,12 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   let product;
   try {
-    product = Product.findById(req.params.id);
-    await product.remove();
+    await Product.remove(req.params.id);
   } catch (err) {
     return next(err);
   }
 
-  res.redirect("/admin/products");
+  res.json({ message: "Deleted product!" });
 };
 
 module.exports = {

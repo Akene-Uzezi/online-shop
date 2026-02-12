@@ -6,7 +6,7 @@
         <%- include('../../shared/includes/header') %>
             <main>
                 <h1>Add new Product</h1>
-                <%- include('inc/product-form', { submitPath: 'admin/products' , product: { title: '' , summary: '' ,
+                <%- include('inc/product-form', { submitPath: '/admin/products' , product: { title: '' , summary: '' ,
                     price: '' , description: '' }, imageRequired: true }) %>
             </main>
             <%- include('../../shared/includes/footer') %>

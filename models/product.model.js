@@ -16,6 +16,20 @@ class Product {
     }
   }
 
+  async addNewProduct() {
+    const productData = {
+      title: this.title,
+      summary: this.summary,
+      price: this.price,
+      description: this.description,
+      image: this.image,
+      imagePath: `product-data/images/${this.image}`,
+      imageUrl: `/products/assets/images/${this.image}`,
+    };
+
+    await db.getDb().collection("products").insertOne(productData);
+  }
+
   static async findAll() {
     const products = await db.getDb().collection("products").find().toArray();
     return products;
@@ -69,8 +83,8 @@ class Product {
     this.updateImage();
   }
 
-  remove() {
-    const productId = new ObjectId(this.id);
+  static remove(id) {
+    const productId = new ObjectId(id);
     return db.getDb().collection("products").deleteOne({ _id: productId });
   }
 }
