@@ -14,7 +14,9 @@
                 <section>
                     <ul id="products-grid">
                         <% products.forEach((product)=> { %>
-                            <%- include('inc/product-item', {product}) %>
+                            <li>
+                            <%- include('../../shared/includes/product-item', {product}) %> 
+                            </li>
                                 <% }) %>
                     </ul>
                 </section>
