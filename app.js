@@ -6,6 +6,7 @@ const path = require("path");
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
+const cartMiddleWare = require('./middlewares/cart')
 const protectRoutesMiddleware = require('./middlewares/protect-routes')
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
@@ -19,6 +20,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 const sessionConfig = createSessionConfig();
 app.use(session(sessionConfig));
+app.use(cartMiddleWare)
 app.use(checkAuthStatus);
 app.use(express.static("public"));
 app.use("/admin", express.static("public"));
