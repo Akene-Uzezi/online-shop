@@ -6,8 +6,9 @@ const path = require("path");
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
-const cartMiddleWare = require('./middlewares/cart')
-const protectRoutesMiddleware = require('./middlewares/protect-routes')
+const cartRoutes = require("./routes/cart.routes");
+const cartMiddleWare = require("./middlewares/cart");
+const protectRoutesMiddleware = require("./middlewares/protect-routes");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const notFound = require("./middlewares/not-found");
 const checkAuthStatus = require("./middlewares/check-auth");
@@ -20,21 +21,23 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 const sessionConfig = createSessionConfig();
 app.use(session(sessionConfig));
-app.use(cartMiddleWare)
+app.use(cartMiddleWare);
 app.use(checkAuthStatus);
 app.use(express.static("public"));
 app.use("/admin", express.static("public"));
 app.use("/admin/products", express.static("public"));
 app.use("/products/assets", express.static("product-data"));
-app.use('/products/:id', express.static('public'))
-app.use('/products/:id', express.static('product-data'))
+app.use("/products/:id", express.static("public"));
+app.use("/products/:id", express.static("product-data"));
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 app.use(csrf());
 app.use(addCsrfTokenMiddleware);
 app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
-app.use(protectRoutesMiddleware)
+app.use("/cart", cartRoutes);
+app.use(protectRoutesMiddleware);
 app.use("/admin", adminRoutes);
 
 app.use(notFound);

@@ -18,4 +18,4 @@ const addCartItem = async (req, res, next) => {
   });
 };
 
-module.exports = addCartItem;
+module.exports = { addCartItem };
