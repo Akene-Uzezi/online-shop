@@ -14,8 +14,8 @@ class Cart {
 
     this.items.forEach((item) => {
       if (item.product._id === product._id) {
-        cartItem.quantity = cartItem.quantity + 1;
-        cartItem.totalPrice += product.price;
+        cartItem.quantity = item.quantity + 1;
+        cartItem.totalPrice = item.totalPrice + product.price;
         item = cartItem;
 
         this.totalQuantity++;

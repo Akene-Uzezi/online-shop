@@ -1,0 +1,26 @@
+<%- include('../../shared/includes/head', {title: 'Your Cart' }) %>
+    <link rel="stylesheet" href="/styles/cart.css">
+    </head>
+
+    <body>
+        <%- include('../../shared/includes/header') %>
+            <main>
+                <h1>Your cart</h1>
+                <ul id="cart-items">
+                    <% cart.items.forEach(item=> { %>
+                        <li>
+                            <%- include('includes/cart-item', {item}) %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <div id="cart-total">
+                    <p>Total: $<%= cart.totalPrice.toFixed(2) %>
+                    </p>
+
+                    <button class="btn">Buy Products</button>
+                </div>
+            </main>
+            <%- include('../../shared/includes/footer') %>
+    </body>
+
+    </html>
