@@ -15,8 +15,10 @@
                         <p>
                             <%= product.price %>
                         </p>
-                        <button class="btn" data-productid="<%= product._id %>" data-csrf="<%= csrfToken %>">Add to
-                            cart</button>
+                        <% if(locals.isAuth) { %>
+                            <button class="btn" data-productid="<%= product._id %>" data-csrf="<%= csrfToken %>">Add to
+                                cart</button>
+                            <% } %>
                     </div>
                 </header>
                 <p id="product-description">
