@@ -21,5 +21,20 @@ const addCartItem = async (req, res, next) => {
     newTotalItems: cart.totalQuantity,
   });
 };
+const updateCartItem = async (req, res, next) => {
+  const cart = res.locals.cart;
+  const updatedItemData = cart.updateItem(
+    req.body.productId,
+    req.body.quantity,
+  );
+  req.session.cart = cart;
+  res.json({
+    updatedCartData: {
+      newTotalQuantity: cart.totalQuantity,
+      newTotalPrice: cart.totalPrice,
+      updatedItemPrice: updatedItemData.updatedItemPrice,
+    },
+  });
+};
 
-module.exports = { addCartItem, getCart };
+module.exports = { addCartItem, getCart, updateCartItem };
