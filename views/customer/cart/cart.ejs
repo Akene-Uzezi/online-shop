@@ -21,6 +21,7 @@
                     </p>
 
                     <form action="/orders" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button class="btn">Buy Products</button>
                     </form>
                 </div>

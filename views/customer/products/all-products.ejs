@@ -1,5 +1,5 @@
 <%- include('../../shared/includes/head', {title: 'All products' }) %>
-<link rel="stylesheet" href="/styles/products.css">
+    <link rel="stylesheet" href="/styles/products.css">
     </head>
 
     <body>
@@ -7,11 +7,11 @@
             <main>
                 <h1>All products</h1>
                 <ul id="products-grid">
-                <% products.forEach((product) => { %>
-                    <li>
-                        <%- include('../../shared/includes/product-item', {product}) %>
-                    </li>
-                <% }) %>
+                    <% products.forEach((product)=> { %>
+                        <li>
+                            <%- include('../../shared/includes/product-item', {product}) %>
+                        </li>
+                        <% }) %>
                 </ul>
             </main>
             <%- include('../../shared/includes/footer') %>

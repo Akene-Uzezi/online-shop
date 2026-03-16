@@ -1,5 +1,6 @@
 const db = require("../database/onlineshop");
 const bcrypt = require("bcrypt");
+const mongodb = require("mongodb");
 class User {
   constructor(
     username,
@@ -8,7 +9,7 @@ class User {
     fullname,
     street,
     postal,
-    city
+    city,
   ) {
     this.username = username;
     this.password = password;
@@ -19,6 +20,14 @@ class User {
       postal,
       city,
     };
+  }
+
+  static findById(userId) {
+    const uid = new mongodb.ObjectId(userId);
+    return db
+      .getDb()
+      .collection("users")
+      .findOne({ _id: uid }, { projection: { password: 0 } });
   }
 
   getUserWithSameUsername() {
