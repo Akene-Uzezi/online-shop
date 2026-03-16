@@ -8,8 +8,8 @@
                         )</span>
         </p>
     </div>
-    <div class="cart-item-management">
+    <form class="cart-item-management" data-productid="<%= item.product._id %>" data-csrf="<%= csrfToken %>">
         <input type="number" value="<%= item.quantity %>" required>
         <button class="btn btn-alt">Update</button>
-    </div>
+    </form>
 </article>
