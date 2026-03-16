@@ -23,10 +23,20 @@ const addCartItem = async (req, res, next) => {
 };
 const updateCartItem = async (req, res, next) => {
   const cart = res.locals.cart;
-  const updatedItemData = cart.updateItem(
-    req.body.productId,
-    req.body.quantity,
-  );
+  let product;
+  try {
+    product = await Product.findById(req.body.productId);
+  } catch (err) {
+    next(err);
+    return;
+  }
+
+  const updatedItemData = cart.updateItem(product, Number(req.body.quantity));
+  if (!updatedItemData) {
+    // item not found or nothing updated
+    res.status(400).json({ message: "Could not update cart item." });
+    return;
+  }
   req.session.cart = cart;
   res.json({
     updatedCartData: {

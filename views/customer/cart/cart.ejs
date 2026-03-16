@@ -15,7 +15,9 @@
                         <% }) %>
                 </ul>
                 <div id="cart-total">
-                    <p>Total: $<%= cart.totalPrice.toFixed(2) %>
+                    <p>Total: $<span id="cart-total-price">
+                            <%= cart.totalPrice.toFixed(2) %>
+                        </span>
                     </p>
 
                     <button class="btn">Buy Products</button>
