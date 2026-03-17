@@ -1,0 +1,7 @@
+<ol>
+    <% orders.forEach(order=> { %>
+        <li>
+            <%- include('order-item', { order }) %>
+        </li>
+        <% }) %>
+</ol>

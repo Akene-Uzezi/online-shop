@@ -18,30 +18,65 @@ class Order {
     this.id = orderId;
   }
 
+  static transformOrderDocument(orderDoc) {
+    return new Order(
+      orderDoc.productData,
+      orderDoc.userData,
+      orderDoc.status,
+      orderDoc.date,
+      orderDoc._id,
+    );
+  }
+
+  static transformOrderDocuments(orderDocs) {
+    return orderDocs.map(this.transformOrderDocument);
+  }
+
+  static async findAll() {
+    const orders = await db
+      .getDb()
+      .collection("orders")
+      .find()
+      .sort({ _id: -1 })
+      .toArray();
+    return this.transformOrderDocuments(orders);
+  }
+
+  static async findAllForUser(userId) {
+    const uid = new mongodb.ObjectId(userId);
+    const orders = await db
+      .getDb()
+      .collection("orders")
+      .find({ "userData._id": uid })
+      .sort({ _id: -1 })
+      .toArray();
+    return this.transformOrderDocuments(orders);
+  }
+
+  static async findById(orderId) {
+    const order = await db
+      .getDb()
+      .collection("orders")
+      .findOne({ _id: new mongodb.ObjectId(orderId) });
+    this.transformOrderDocuments(order);
+  }
+
   save() {
-    const orderDocument = {
-      userData: this.userData,
-      productData: this.productData,
-      date: new Date(),
-      status: this.status,
-    };
-
-    const ordersCollection = db.getDb().collection("orders");
-
     if (this.id) {
-      // update existing order
       const orderId = new mongodb.ObjectId(this.id);
-      return ordersCollection.updateOne(
-        { _id: orderId },
-        { $set: orderDocument },
-      );
+      return db
+        .getDb()
+        .collection("orders")
+        .updateOne({ _id: orderId }, { $set: { status: this.status } });
+    } else {
+      const orderDocument = {
+        userData: this.userData,
+        productData: this.productData,
+        date: new Date(),
+        status: this.status,
+      };
+      return db.getDb().collection("orders").insertOne(orderDocument);
     }
-
-    // insert new order and set the generated id on this instance
-    return ordersCollection.insertOne(orderDocument).then((result) => {
-      this.id = result.insertedId;
-      return result;
-    });
   }
 }
 

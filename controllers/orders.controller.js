@@ -25,8 +25,13 @@ const addOrder = async (req, res, next) => {
   res.redirect("/orders");
 };
 
-const getOrders = (req, res) => {
-  res.render("customer/orders/all-orders");
+const getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.findAllForUser(res.locals.uid);
+    res.render("customer/orders/all-orders", { orders });
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = { addOrder, getOrders };
