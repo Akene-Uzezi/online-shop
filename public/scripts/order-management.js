@@ -22,4 +22,17 @@ async function updateOrder(e) {
     alert("Something went wrong. Please try again later.");
     console.log(err);
   }
+
+  if(!response.ok) {
+    alert('something went wrong') 
+    return
+  }
+
+  const responseData = await response.json();
+
+  form.parentElement.parentElement.querySelector('.badge').textContent = responseData.newStatus.toUpperCase()
 }
+
+updateOrderFormElements.forEach(element => {
+  element.addEventListener('submit', updateOrder)
+})
