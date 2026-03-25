@@ -16,7 +16,7 @@
                 </ul>
                 <div id="cart-total">
                     <p>Total: NGN<span id="cart-total-price">
-                            <%= cart.totalPrice %>
+                            <%= Number(cart.totalPrice.toFixed(2)) %>
                         </span>
                     </p>
                     <% if(cart.totalQuantity> 0) { %>

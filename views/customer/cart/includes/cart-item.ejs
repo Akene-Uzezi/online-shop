@@ -4,9 +4,9 @@
             <%= item.product.title %>
         </h2>
         <p>
-            <span class="cart-item-price">NGN<%= item.totalPrice.toFixed(2) %> </span><span
+            <span class="cart-item-price">NGN<%= Number(item.totalPrice.toFixed(2)) %> </span><span
                 class="cart-product-price">(NGN
-                <%= item.product.price.toFixed(2) %>
+                <%= Number(item.product.price.toFixed(2)) %>
                     )
             </span>
         </p>

@@ -37,6 +37,16 @@ const pay = async (req, res, next) => {
   const user = await User.findById(req.session.uid);
   const cart = req.session.cart;
   try {
+    console.log("DEBUG: User Found ->", user ? user.email : "NO USER FOUND");
+    console.log(
+      "DEBUG: Cart Found ->",
+      cart ? cart.totalPrice : "NO CART FOUND",
+    );
+
+    if (!user || !cart) {
+      console.error("Missing User or Cart data. Redirecting to cart.");
+      return res.redirect("/cart");
+    }
     const response = await paystack.transaction.initialize({
       email: user.email,
       amount: Math.round(Number(cart.totalPrice) * 100),
