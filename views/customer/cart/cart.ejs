@@ -19,11 +19,12 @@
                             <%= cart.totalPrice.toFixed(2) %>
                         </span>
                     </p>
-
-                    <form action="/orders" method="POST">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <button class="btn">Buy Products</button>
-                    </form>
+                    <% if(cart.totalQuantity> 0) { %>
+                        <form action="/orders/pay" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="btn">Buy Products</button>
+                        </form>
+                        <% } %>
                 </div>
             </main>
             <%- include('../../shared/includes/footer') %>

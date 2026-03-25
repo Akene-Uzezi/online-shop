@@ -12,6 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@paystack/paystack-sdk": "^1.0.1",
     "bcrypt": "^6.0.0",
     "body": "^5.1.0",
     "body-parser": "^2.2.0",
@@ -28,6 +29,7 @@
     "nodemon": "^3.1.9",
     "parser": "^0.1.4",
     "paystack-node": "^0.3.0",
+    "stripe": "^20.4.1",
     "uuid": "^11.1.0",
     "xss": "^1.0.15"
   }
