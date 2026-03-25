@@ -51,6 +51,8 @@ const pay = async (req, res, next) => {
       email: user.email,
       amount: Math.round(Number(cart.totalPrice) * 100),
       currency: "NGN",
+      first_name: user.name,
+      phone: user.phone,
       callback_url: "http://localhost:3000/orders/verify",
       channels: ["card", "bank_transfer", "bank", "qr"],
       metadata: {

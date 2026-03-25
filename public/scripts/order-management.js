@@ -23,16 +23,18 @@ async function updateOrder(e) {
     console.log(err);
   }
 
-  if(!response.ok) {
-    alert('something went wrong') 
-    return
+  if (!response.ok) {
+    alert("something went wrong");
+    console.log(response);
+    return;
   }
 
   const responseData = await response.json();
 
-  form.parentElement.parentElement.querySelector('.badge').textContent = responseData.newStatus.toUpperCase()
+  form.parentElement.parentElement.querySelector(".badge").textContent =
+    responseData.newStatus.toUpperCase();
 }
 
-updateOrderFormElements.forEach(element => {
-  element.addEventListener('submit', updateOrder)
-})
+updateOrderFormElements.forEach((element) => {
+  element.addEventListener("submit", updateOrder);
+});

@@ -32,7 +32,7 @@
         <section class="order-actions">
             <form>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input type="hidden" name="orderid" value="<%= order._id %>">
+                <input type="hidden" name="orderid" value="<%= order.id %>">
                 <select name="status">
                     <option value="pending" <% if(order.status==='pending' ) { %> selected <% } %>>Pending</option>
                     <option value="fulfilled" <% if(order.status==='fulfilled' ) { %> selected <% } %>>Fulfilled
