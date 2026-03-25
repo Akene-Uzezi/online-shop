@@ -4,12 +4,12 @@ const Paystack = require("@paystack/paystack-sdk");
 require("dotenv").config();
 const paystack = new Paystack(process.env.paystackSecretKey);
 
-const addOrder = async (req, res, next) => {
-  const cart = res.locals.cart;
+const addOrder = async (cartData, uid) => {
+  const cart = cartData;
 
   let userDocument;
   try {
-    userDocument = await User.findById(res.locals.uid);
+    userDocument = await User.findById(uid);
   } catch (err) {
     next(err);
     return;
@@ -22,10 +22,6 @@ const addOrder = async (req, res, next) => {
     next(err);
     return;
   }
-
-  req.session.cart = null;
-
-  res.redirect("/orders");
 };
 
 const getOrders = async (req, res, next) => {
@@ -39,14 +35,18 @@ const getOrders = async (req, res, next) => {
 
 const pay = async (req, res, next) => {
   const user = await User.findById(req.session.uid);
-  const cart = res.locals.cart;
+  const cart = req.session.cart;
   try {
     const response = await paystack.transaction.initialize({
       email: user.email,
       amount: Math.round(Number(cart.totalPrice) * 100),
       currency: "NGN",
-      callback_url: "http://localhost:3000/verify",
-      channels: ["card", "bank_transfer"],
+      callback_url: "http://localhost:3000/orders/verify",
+      channels: ["card", "bank_transfer", "bank", "qr"],
+      metadata: {
+        cartData: cart,
+        uid: user._id,
+      },
     });
 
     if (response.status === true) {
@@ -62,4 +62,38 @@ const pay = async (req, res, next) => {
   }
 };
 
-module.exports = { addOrder, getOrders, pay };
+const getVerify = async (req, res, next) => {
+  try {
+    const { reference } = req.query;
+    if (!reference) {
+      return res.status(400).render("user/auth/verify", {
+        error: "No transaction reference",
+        success: null,
+      });
+    }
+    const response = await paystack.transaction.verify({ reference });
+    if (response.status === true && response.data.status === "success") {
+      const { cartData, uid } = response.data.metadata;
+      if (cartData && cartData.totalPrice) {
+        cartData.totalPrice = Number(cartData.totalPrice);
+      }
+      await addOrder(cartData, uid);
+      req.session.cart = null;
+      res.status(200).render("customer/auth/verify", {
+        error: null,
+        success: "Payment Successful",
+      });
+      return;
+    } else {
+      res.render("customer/auth/verify", {
+        error: "Payment Abandoned",
+        success: null,
+      });
+    }
+  } catch (err) {
+    next(err);
+    console.log(err);
+  }
+};
+
+module.exports = { addOrder, getOrders, pay, getVerify };

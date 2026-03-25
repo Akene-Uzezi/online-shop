@@ -1,0 +1,26 @@
+<%- include('../../shared/includes/head', {title: 'Login' }) %>
+    <link rel="stylesheet" href="/styles/forms.css">
+    <link rel="stylesheet" href="/styles/auth.css">
+    </head>
+
+    <body>
+        <%- include('../../shared/includes/header') %>
+            <main>
+                <% if(error) { %>
+                    <section class="alert">
+                        <p>
+                            <%= error %>
+                        </p>
+                    </section>
+                    <% } else if(success) { %>
+                        <section class="alert-success">
+                            <p>
+                                <%= success %>
+                            </p>
+                        </section>
+                        <% } %>
+            </main>
+            <%- include('../../shared/includes/footer') %>
+    </body>
+
+    </html>

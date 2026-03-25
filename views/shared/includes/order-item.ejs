@@ -1,6 +1,6 @@
 <article class="order-item">
     <header class="order-summary">
-        <h2><span class="order-item-price">$<%= order.productData.totalPrice.toFixed(2) %></span></h2>
+        <h2><span class="order-item-price">$<%= order.productData.totalPrice %></span></h2>
         <p><span class="badge">
                 <%= order.status.toUpperCase() %>
             </span></p>
@@ -21,8 +21,8 @@
                 <ul>
                     <% order.productData.items.forEach(item=> { %>
                         <li>
-                            <%= item.product.title %> - <%= item.totalPrice.toFixed(2) %> ($<%=
-                                        item.product.price.toFixed(2) %> x <%= item.quantity %>)
+                            <%= item.product.title %> - <%= item.totalPrice %> ($<%= item.product.price %> x <%=
+                                            item.quantity %>)
                         </li>
                         <% }) %>
                 </ul>

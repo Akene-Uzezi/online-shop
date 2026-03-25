@@ -38,6 +38,7 @@ app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/orders/verify", express.static("public"));
 app.use("/cart", cartRoutes);
 app.use(protectRoutesMiddleware);
 app.use("/admin", adminRoutes);
